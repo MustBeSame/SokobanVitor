@@ -22,19 +22,29 @@ export class Map {
 		var terrain = this.terrains.find(x => x.symbol == terrainSymbol);
 		return terrain;
     }
-}
+    sliderAtPos(cellPos) {
+        var returnValue = null;
 
+        for (var i = 0; i < this.sliders.length; i++) {
+            let slider = this.sliders[i];
+            if (slider.position == cellPos) {
+                returnValue = slider;
+                return returnValue;
+            }
+        }
+    }
+}
 interface Player {
-    position: number;
+    position: Coords;
 }
 declare var Player: {
-    new (position?: number): Player;
+    new (position?: Coords): Player;
 }
 
 interface Slider {
-    position: number;
+    position: Coords;
 }declare var Slider: {
-    new (position?: number): Slider;
+    new (position?: Coords): Slider;
 }
 // function Maap(terrains, cellsAsStrings) {
 //   this.terrains = terrains;

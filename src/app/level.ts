@@ -1,64 +1,99 @@
 import { Coords } from './coords'
+import { InputHelper } from './input-helper'
 import { DisplayHelper } from './display-helper'
+import { Map } from './map'
 
 export class Level {
     name: string;
-    map: string;
+    map: Map;
 
-    constructor(name:string, map) {
+    constructor(name: string, map:Map) {
         this.name = name;
         this.map = map;
+    }
+
+    updateForTimerTick(inputHelper:InputHelper) {
+        
+        if (inputHelper.keyCodePressed == 65) // a
+        {
+            this.updateForTimerTick_PlayerMove
+                (
+                new Coords(-1, 0)
+                );
+        }
+        else if (inputHelper.keyCodePressed == 68) // d
+        {
+            this.updateForTimerTick_PlayerMove
+                (
+                new Coords(1, 0)
+                );
+        }
+        else if (inputHelper.keyCodePressed == 83) // s
+        {
+            this.updateForTimerTick_PlayerMove
+                (
+                new Coords(0, 1)
+                );
+        }
+        else if (inputHelper.keyCodePressed == 87) // w
+        {
+            this.updateForTimerTick_PlayerMove
+                (
+                new Coords(0, -1)
+                );
+        }
+    }
+    updateForTimerTick_PlayerMove(directionToMove: Coords) {
+        debugger;
+        let playerToMove = this.map.player;
+        playerToMove.position = directionToMove;
+
+        let playerPosNext:Coords[];
+        playerPosNext.push(playerToMove.position);
+        
+        var map = this.map;
+        var cellAtPlayerPosNext = map.cellAtPos(playerPosNext);
+
+        if (cellAtPlayerPosNext.canPass == true) {
+            var sliderAtPlayerPosNext = map.sliderAtPos(playerPosNext);
+
+            if (sliderAtPlayerPosNext == null) {
+                playerToMove.position.add(directionToMove);
+            }
+            else {
+                var canSliderSlide = true;
+
+                var sliderPosNext:Coords[];
+                sliderPosNext.push(directionToMove);
+
+                var cellAtSliderPosNext = map.cellAtPos(sliderPosNext);
+                if (cellAtSliderPosNext.canPass == false) {
+                    canSliderSlide = false;
+                }
+                else {
+                    var sliderOtherAtSliderPosNext = this.map.sliderAtPos
+                        (
+                        sliderPosNext
+                        );
+                    if (sliderOtherAtSliderPosNext != null) {
+                        canSliderSlide = false;
+                    }
+                }
+
+                if (canSliderSlide == true) {
+                    playerToMove.position.add(directionToMove);
+                    sliderAtPlayerPosNext.position.add(directionToMove);
+
+                    if (cellAtSliderPosNext.name == "Goal") {
+                        console.log("VOCÊ GANHOU");
+                    }
+                }
+            }
+        }
     }
 }
 
 
-// Level.prototype.updateForTimerTick_PlayerMove = function (directionToMove) {
-//     var playerToMove = this.map.player;
-//     var playerPosNext = playerToMove.pos.clone().add
-//         (
-//         directionToMove
-//         );
-//     var map = this.map;
-//     var cellAtPlayerPosNext = map.cellAtPos(playerPosNext);
-
-//     if (cellAtPlayerPosNext.isPassable == true) {
-//         var sliderAtPlayerPosNext = map.sliderAtPos(playerPosNext);
-
-//         if (sliderAtPlayerPosNext == null) {
-//             playerToMove.pos.add(directionToMove);
-//         }
-//         else {
-//             var canSliderSlide = true;
-
-//             var sliderPosNext = playerPosNext.clone().add
-//                 (
-//                 directionToMove
-//                 );
-//             var cellAtSliderPosNext = map.cellAtPos(sliderPosNext);
-//             if (cellAtSliderPosNext.isPassable == false) {
-//                 canSliderSlide = false;
-//             }
-//             else {
-//                 var sliderOtherAtSliderPosNext = this.map.sliderAtPos
-//                     (
-//                     sliderPosNext
-//                     );
-//                 if (sliderOtherAtSliderPosNext != null) {
-//                     canSliderSlide = false;
-//                 }
-//             }
-
-//             if (canSliderSlide == true) {
-//                 playerToMove.pos.add(directionToMove);
-//                 sliderAtPlayerPosNext.pos.add(directionToMove);
-
-//                 if (cellAtSliderPosNext.name == "Goal") {
-//                     this.victoryCheck();
-//                 }
-//             }
-//         }
-//     }
-// }
 
 // Level.prototype.victoryCheck = function () {
 //     var areAllGoalCellsOccupiedBySliders = true;

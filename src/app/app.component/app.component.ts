@@ -6,35 +6,20 @@ import { DisplayHelper } from '../display-helper'
 import { InputHelper } from '../input-helper'
 import { Map } from '../map'
 
+
+
 @Component({
   selector: 'app-root',
   templateUrl: "./app.component.html",
   styleUrls: ['./app.component.css'],
-})
+ })
 export class AppComponent {
   title = 'Sokoban';
-  map = [
-    "xxxxxxxxxxxx",
-    "x..........x",
-    "x.p........x",
-    "x.....x....x",
-    "x.....x..+.x",
-    "x.....x....x",
-    "x..o..x..+.x",
-    "x.....x....x",
-    "x..o..x....x",
-    "x..........x",
-    "x..........x",
-    "xxxxxxxxxxxx"];
-
   
-  //this.gameInitializer(new Coords(120,120), this.startGame());
   mapao = this.startGame();
-  // tslint:disable-next-line
-  //log(mapao);
-
 
   public startGame() {
+    debugger;
     var mapTerrains =
       [
         // name, symbol, color, canPass, canMove
@@ -54,6 +39,10 @@ export class AppComponent {
 
     display.initialize(new Coords(120,120), level);
 
+    var input = new InputHelper();
+
+    input.initialize(level);
+    
     return level.map;
   }
 
@@ -77,19 +66,4 @@ export class AppComponent {
   }
 }
 
-function ArrayExtensions()
-{
-	// do nothing
-}
-{
-	ArrayExtensions.prototype.addLookups = function(keyName)
-	{
-		for (var i = 0; i < this.length; i++)
-		{
-			var item = this[i];
-			var key = item[keyName];
-			this[key] = item;
-		}
-	}
-}
 
