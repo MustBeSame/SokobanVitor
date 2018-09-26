@@ -4,6 +4,7 @@ import { Map } from './map'
 
 export class DisplayHelper {
 	graphics: any;
+	viewSizeInPixels: Coords;
 
 
 	drawLevel = function (level: Level) {
@@ -49,7 +50,9 @@ export class DisplayHelper {
 				}
 			}
 		}
-		if (map.terrains["Slider"] != null) {
+		debugger;
+		if (map.terrains.find(x => x.name == "Slider")) {
+			console.log("ENTROU NO PRIMEIRO IFFFFF");
 			var colorSlider = map.terrains["Slider"].color;
 			for (var i = 0; i < map.sliders.length; i++) {
 				var slider = map.sliders[i];
@@ -97,7 +100,7 @@ export class DisplayHelper {
 
 	initialize = function (viewSizeInPixels: Coords, level: Level) {
 		this.viewSizeInPixels = viewSizeInPixels;
-
+		level.displayHelper = this;
 		let canvas = document.createElement("canvas");
 		canvas.width = viewSizeInPixels.x;
 		canvas.height = viewSizeInPixels.y;

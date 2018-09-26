@@ -19,7 +19,6 @@ export class AppComponent {
   mapao = this.startGame();
 
   public startGame() {
-    debugger;
     var mapTerrains =
       [
         // name, symbol, color, canPass, canMove
@@ -32,9 +31,6 @@ export class AppComponent {
 
     var level = this.loadMap(mapTerrains);
 
-    console.log(level);
-    console.log(level.map);
-
     let display = new DisplayHelper();
 
     display.initialize(new Coords(120,120), level);
@@ -42,6 +38,8 @@ export class AppComponent {
     var input = new InputHelper();
 
     input.initialize(level);
+
+    //level.map.player
     
     return level.map;
   }

@@ -6,7 +6,7 @@ import { Map } from './map'
 export class Level {
     name: string;
     map: Map;
-
+    displayHelper: DisplayHelper;
     constructor(name: string, map:Map) {
         this.name = name;
         this.map = map;
@@ -44,21 +44,21 @@ export class Level {
         }
     }
     updateForTimerTick_PlayerMove(directionToMove: Coords) {
-        debugger;
+        this.map.player.position = new Coords(2,2);
         let playerToMove = this.map.player;
-        playerToMove.position = directionToMove;
 
-        let playerPosNext:Coords[];
-        playerPosNext.push(playerToMove.position);
+        let playerPosNext:Coords[] = new Array<Coords>();
+        playerPosNext.push(new Coords(playerToMove.position.x + directionToMove.x, playerToMove.position.y + directionToMove.y));
         
         var map = this.map;
-        var cellAtPlayerPosNext = map.cellAtPos(playerPosNext);
+        var cellAtPlayerPosNext = map.cellAtPos(playerPosNext[0]);
 
         if (cellAtPlayerPosNext.canPass == true) {
             var sliderAtPlayerPosNext = map.sliderAtPos(playerPosNext);
 
             if (sliderAtPlayerPosNext == null) {
                 playerToMove.position.add(directionToMove);
+                this.displayHelper.drawLevel(this);
             }
             else {
                 var canSliderSlide = true;

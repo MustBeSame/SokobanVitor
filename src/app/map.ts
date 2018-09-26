@@ -15,16 +15,24 @@ export class Map {
             this.cellAsStrings[0].length,
             this.cellAsStrings.length
         );
+        this.sliders = new Array<Slider>();
+
     }
 
     cellAtPos (cellPos){
         var terrainSymbol = this.cellAsStrings[cellPos.y].charAt(cellPos.x);
-		var terrain = this.terrains.find(x => x.symbol == terrainSymbol);
+        var terrain = this.terrains.find(x => x.symbol == terrainSymbol);
+        if (terrain.name == "Player"){
+            this.player = new Player(cellPos);
+        }
+        if (terrain.name == "Slider"){
+            this.sliders.push(new Slider(cellPos));
+        }
 		return terrain;
     }
     sliderAtPos(cellPos) {
         var returnValue = null;
-
+        
         for (var i = 0; i < this.sliders.length; i++) {
             let slider = this.sliders[i];
             if (slider.position == cellPos) {
@@ -34,17 +42,17 @@ export class Map {
         }
     }
 }
-interface Player {
+class Player {
     position: Coords;
+    constructor(position:Coords){
+        this.position = position;
+    }
 }
-declare var Player: {
-    new (position?: Coords): Player;
-}
-
-interface Slider {
+class Slider {
     position: Coords;
-}declare var Slider: {
-    new (position?: Coords): Slider;
+    constructor(position:Coords){
+        this.position = position;
+    }
 }
 // function Maap(terrains, cellsAsStrings) {
 //   this.terrains = terrains;
