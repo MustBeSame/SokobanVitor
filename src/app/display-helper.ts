@@ -51,41 +51,13 @@ export class DisplayHelper {
 			}
 		}
 		debugger;
-		if (map.terrains.find(x => x.name == "Slider")) {
-			console.log("ENTROU NO PRIMEIRO IFFFFF");
-			var colorSlider = map.terrains["Slider"].color;
-			for (var i = 0; i < map.sliders.length; i++) {
-				var slider = map.sliders[i];
+		var colorSlider = map.terrains[3].color;
+		for (var i = 0; i < map.sliders.length; i++) {
+			let slider = map.sliders[i];
 
-				drawPos.overwriteWith
-					(
-					this.slider.pos
-					).multiply
-					(
-					mapCellSizeInPixels
-					);
+			drawPos.overwriteWith(slider.position).multiply(mapCellSizeInPixels);
 
-				this.graphics.fillStyle = colorSlider;
-
-				this.graphics.fillRect
-					(
-					drawPos.x, drawPos.y,
-					mapCellSizeInPixels.x,
-					mapCellSizeInPixels.y
-					);
-			}
-			if (map.terrains["Player"] != null) {
-				var colorPlayer = map.terrains["Player"].color;
-			}
-			drawPos.overwriteWith
-				(
-				map.player.position
-				).multiply
-				(
-				mapCellSizeInPixels
-				);
-
-			this.graphics.fillStyle = colorPlayer;
+			this.graphics.fillStyle = colorSlider;
 
 			this.graphics.fillRect
 				(
@@ -95,8 +67,20 @@ export class DisplayHelper {
 				);
 		}
 
+		var colorPlayer = map.terrains[2].color;
+		
+		drawPos.overwriteWith(map.player.position).multiply(mapCellSizeInPixels);
 
+		this.graphics.fillStyle = colorPlayer;
+
+		this.graphics.fillRect
+			(
+			drawPos.x, drawPos.y,
+			mapCellSizeInPixels.x,
+			mapCellSizeInPixels.y
+			);
 	}
+
 
 	initialize = function (viewSizeInPixels: Coords, level: Level) {
 		this.viewSizeInPixels = viewSizeInPixels;
