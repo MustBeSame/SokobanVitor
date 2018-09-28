@@ -13,12 +13,9 @@ export class DisplayHelper {
 	}
 
 	drawMap = function (map: Map) {
-		var mapSizeInCells = map.sizeInCells;
+		var mapSizeInCells:Coords = new Coords(map.sizeInCells.x, map.sizeInCells.y);
 
-		var mapCellSizeInPixels = this.viewSizeInPixels.clone().divide
-			(
-			mapSizeInCells
-			);
+		var mapCellSizeInPixels = this.viewSizeInPixels.clone().divide(mapSizeInCells);
 		var cellPos = new Coords(0, 0);
 		var drawPos = new Coords(0, 0);
 
@@ -27,58 +24,34 @@ export class DisplayHelper {
 
 			for (var x = 0; x < mapSizeInCells.x; x++) {
 				cellPos.x = x;
-
 				var cellToDraw = map.cellAtPos(cellPos);
 
 				if (cellToDraw.color != null) {
-					drawPos.overwriteWith
-						(
-						cellPos
-						).multiply
-						(
-						mapCellSizeInPixels
-						);
+					drawPos.overwriteWith(cellPos).multiply(mapCellSizeInPixels);
 
 					this.graphics.fillStyle = cellToDraw.color;
-
-					this.graphics.fillRect
-						(
-						drawPos.x, drawPos.y,
-						mapCellSizeInPixels.x,
-						mapCellSizeInPixels.y
-						);
+					
+					this.graphics.fillRect(drawPos.x, drawPos.y, mapCellSizeInPixels.x, mapCellSizeInPixels.y);
 				}
 			}
 		}
-		debugger;
-		var colorSlider = map.terrains[3].color;
-		for (var i = 0; i < map.sliders.length; i++) {
-			let slider = map.sliders[i];
+		// var colorSlider = map.terrains[3].color;
+		// for (var i = 0; i < map.sliders.length; i++) {
+		// 	let slider = map.sliders[i];
 
-			drawPos.overwriteWith(slider.position).multiply(mapCellSizeInPixels);
+		// 	drawPos.overwriteWith(slider.position).multiply(mapCellSizeInPixels);
 
-			this.graphics.fillStyle = colorSlider;
+		// 	this.graphics.fillStyle = colorSlider;
 
-			this.graphics.fillRect
-				(
-				drawPos.x, drawPos.y,
-				mapCellSizeInPixels.x,
-				mapCellSizeInPixels.y
-				);
-		}
+		// 	this.graphics.fillRect(drawPos.x, drawPos.y, mapCellSizeInPixels.x, mapCellSizeInPixels.y);
+		// }
 
-		var colorPlayer = map.terrains[2].color;
-		
-		drawPos.overwriteWith(map.player.position).multiply(mapCellSizeInPixels);
+		// var colorPlayer = map.terrains[2].color;
+		// drawPos.overwriteWith(map.player.position).multiply(mapCellSizeInPixels);
 
-		this.graphics.fillStyle = colorPlayer;
+		// this.graphics.fillStyle = colorPlayer;
 
-		this.graphics.fillRect
-			(
-			drawPos.x, drawPos.y,
-			mapCellSizeInPixels.x,
-			mapCellSizeInPixels.y
-			);
+		// this.graphics.fillRect(drawPos.x, drawPos.y, mapCellSizeInPixels.x, mapCellSizeInPixels.y);
 	}
 
 

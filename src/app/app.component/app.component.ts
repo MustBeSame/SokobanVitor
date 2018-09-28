@@ -36,15 +36,14 @@ export class AppComponent {
     display.initialize(new Coords(120,120), level);
 
     var input = new InputHelper();
-
+    debugger;
     input.initialize(level);
 
-    //level.map.player
-    
     return level.map;
   }
 
   loadMap(mapTerrains: MapTerrain[]) {
+    debugger;
     var map = new Map(mapTerrains, [
       "xxxxxxxxxxxx",
       "x..........x",
@@ -58,7 +57,6 @@ export class AppComponent {
       "x..........x",
       "x..........x",
       "xxxxxxxxxxxx"]);
-
     var level0 = new Level("Level 0", map);
     return level0;
   }

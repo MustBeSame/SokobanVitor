@@ -1,6 +1,5 @@
 import { HostListener } from '@angular/core';
 import { Level } from './level'
-import { debug } from 'util';
 
 export class InputHelper {
     keyCodePressed: number;
@@ -13,6 +12,7 @@ export class InputHelper {
     }
     @HostListener('document:keypress', ['$event'])
     handleEventKeyDown(event: KeyboardEvent){
+        debugger;
         this.keyCodePressed = event.keyCode;
         this.level.updateForTimerTick(this);
     }

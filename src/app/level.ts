@@ -44,20 +44,19 @@ export class Level {
         }
     }
     updateForTimerTick_PlayerMove(directionToMove: Coords) {
-        this.map.player.position = new Coords(2,2);
-        let playerToMove = this.map.player;
 
-        let playerPosNext:Coords[] = new Array<Coords>();
-        playerPosNext.push(new Coords(playerToMove.position.x + directionToMove.x, playerToMove.position.y + directionToMove.y));
+        //this.map.player.position = directionToMove;
+        debugger;
+        let playerPosNext:Coords = new Coords(this.map.player.position.x + directionToMove.x, this.map.player.position.y + directionToMove.y);
         
-        var map = this.map;
-        var cellAtPlayerPosNext = map.cellAtPos(playerPosNext[0]);
+        var cellAtPlayerPosNext = this.map.cellAtPos(playerPosNext[0]);
 
         if (cellAtPlayerPosNext.canPass == true) {
-            var sliderAtPlayerPosNext = map.sliderAtPos(playerPosNext);
+            var sliderAtPlayerPosNext = this.map.sliderAtPos(playerPosNext);
 
             if (sliderAtPlayerPosNext == null) {
-                playerToMove.position.add(directionToMove);
+                this.map.player.position = playerPosNext;
+                debugger;
                 this.displayHelper.drawLevel(this);
             }
             else {
@@ -66,7 +65,7 @@ export class Level {
                 var sliderPosNext:Coords[];
                 sliderPosNext.push(directionToMove);
 
-                var cellAtSliderPosNext = map.cellAtPos(sliderPosNext);
+                var cellAtSliderPosNext = this.map.cellAtPos(sliderPosNext);
                 if (cellAtSliderPosNext.canPass == false) {
                     canSliderSlide = false;
                 }
@@ -81,7 +80,7 @@ export class Level {
                 }
 
                 if (canSliderSlide == true) {
-                    playerToMove.position.add(directionToMove);
+                    this.map.player.position.add(directionToMove);
                     sliderAtPlayerPosNext.position.add(directionToMove);
 
                     if (cellAtSliderPosNext.name == "Goal") {

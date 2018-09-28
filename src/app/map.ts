@@ -16,17 +16,16 @@ export class Map {
             this.cellAsStrings.length
         );
         this.sliders = new Array<Slider>();
-
     }
 
     cellAtPos (cellPos){
         var terrainSymbol = this.cellAsStrings[cellPos.y].charAt(cellPos.x);
         var terrain = this.terrains.find(x => x.symbol == terrainSymbol);
         if (terrain.name == "Player"){
-            this.player = new Player(cellPos);
+            this.player = new Player(cellPos.clone());
         }
         if (terrain.name == "Slider"){
-            this.sliders.push(new Slider(cellPos));
+            this.sliders.push(new Slider(cellPos.clone()));
         }
 		return terrain;
     }
