@@ -12,7 +12,6 @@ export class InputHelper {
     }
     @HostListener('document:keypress', ['$event'])
     handleEventKeyDown(event: KeyboardEvent){
-        debugger;
         this.keyCodePressed = event.keyCode;
         this.level.updateForTimerTick(this);
     }

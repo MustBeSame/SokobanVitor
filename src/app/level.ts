@@ -46,43 +46,39 @@ export class Level {
     updateForTimerTick_PlayerMove(directionToMove: Coords) {
 
         //this.map.player.position = directionToMove;
-        debugger;
         let playerPosNext:Coords = new Coords(this.map.player.position.x + directionToMove.x, this.map.player.position.y + directionToMove.y);
-        
-        var cellAtPlayerPosNext = this.map.cellAtPos(playerPosNext[0]);
-
+        this.map.player.positionPast = this.map.player.position;
+        var cellAtPlayerPosNext = this.map.cellAtPos(playerPosNext);
+        debugger;
         if (cellAtPlayerPosNext.canPass == true) {
             var sliderAtPlayerPosNext = this.map.sliderAtPos(playerPosNext);
 
             if (sliderAtPlayerPosNext == null) {
                 this.map.player.position = playerPosNext;
-                debugger;
                 this.displayHelper.drawLevel(this);
             }
             else {
                 var canSliderSlide = true;
-
-                var sliderPosNext:Coords[];
-                sliderPosNext.push(directionToMove);
+                this.map.sliders[sliderAtPlayerPosNext.index].positionPast = this.map.sliders[sliderAtPlayerPosNext.index].position;
+                
+                let sliderPosNext:Coords = new Coords(sliderAtPlayerPosNext.position.x + directionToMove.x, sliderAtPlayerPosNext.position.y + directionToMove.y);
 
                 var cellAtSliderPosNext = this.map.cellAtPos(sliderPosNext);
                 if (cellAtSliderPosNext.canPass == false) {
                     canSliderSlide = false;
                 }
                 else {
-                    var sliderOtherAtSliderPosNext = this.map.sliderAtPos
-                        (
-                        sliderPosNext
-                        );
+                    var sliderOtherAtSliderPosNext = this.map.sliderAtPos(sliderPosNext);
+
                     if (sliderOtherAtSliderPosNext != null) {
                         canSliderSlide = false;
                     }
                 }
 
                 if (canSliderSlide == true) {
-                    this.map.player.position.add(directionToMove);
-                    sliderAtPlayerPosNext.position.add(directionToMove);
-
+                    this.map.sliders[sliderAtPlayerPosNext.index].position = sliderPosNext;
+                    this.displayHelper.drawLevel(this);
+ 
                     if (cellAtSliderPosNext.name == "Goal") {
                         console.log("VOCÊ GANHOU");
                     }

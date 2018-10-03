@@ -25,7 +25,7 @@ export class AppComponent {
         new MapTerrain("Goal", "+", "LightGreen", true, false),
         new MapTerrain("Floor", ".", "Black", true, false),
         new MapTerrain("Player", "p", "Cyan", false, true),
-        new MapTerrain("Slider", "o", "Brown", false, true),
+        new MapTerrain("Slider", "o", "Brown", true, true),
         new MapTerrain("Wall", "x", "LightGray", false, false),
       ];
 
